@@ -36,8 +36,8 @@
 
 
 #   пополнить счет
-def add_money_to_account(acc):
-    acc += int(input("Сколько кредит добавить на счет? "))
+def add_money_to_account(acc, add_money):
+    acc += add_money
     print("-----------------------\n")
     return acc
 
@@ -81,7 +81,7 @@ def menu():
 
         choice = input('Выберите пункт меню: ')
         if choice == '1':
-            account = add_money_to_account(account)
+            account = add_money_to_account(account, int(input("Сколько кредит добавить на счет? ")))
             pass
         elif choice == '2':
             purchase(purchases, account)
