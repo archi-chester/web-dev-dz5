@@ -37,6 +37,7 @@ import account
 import victory
 import os
 import platform
+from shutil import copyfile
 
 
 #   меню
@@ -77,18 +78,36 @@ while True:
 
     #   копировать (файл/папку)
     elif choice == '3':
+
+        item_for_copy = input('Выберите файл для копирования: ')
+        if not os.path.exists(item_for_copy):
+            print(f"Папка {item_for_copy} не существует")
+        else:
+            copyfile(item_for_copy, item_for_copy + "_copy")
+            print(f"Создание {item_for_copy + '_copy'} успешно завершено")
         pass
 
     #   просмотр содержимого рабочей директории
     elif choice == '4':
+        print(f"Содержимое {os.getcwd()}:")
+        for item in os.listdir("."):
+            print(item)
         pass
 
     #   посмотреть только папки
     elif choice == '5':
+        print(f"Содержимое {os.getcwd()}　(только папки):")
+        for item in os.listdir("."):
+            if os.path.isdir(item):
+                print(item)
         pass
 
     #   посмотреть только файлы
     elif choice == '6':
+        print(f"Содержимое {os.getcwd()}　(только папки):")
+        for item in os.listdir("."):
+            if os.path.isfile(item):
+                print(item)
         pass
 
     #   просмотр информации об операционной системе
