@@ -37,10 +37,20 @@ import os
 import json
 
 
+#   завершающий ------------
+def ending_underscore(func):
+    def inner(*args, **kwargs):
+        result = func(*args, **kwargs)
+        print("-----------------------\n")
+        return result
+    return inner
+
+
 #   пополнить счет
+@ending_underscore
 def add_money_to_account(acc, add_money):
     acc += add_money
-    print("-----------------------\n")
+    # print("-----------------------\n")
     set_account(acc)
     return acc
 
@@ -86,6 +96,7 @@ def set_purchases(purchases):
 
 
 #   покупка
+@ending_underscore
 def purchase(purchases, account):
     money_amount = int(input("Сколько хотите потратить? "))
     if money_amount > account:
@@ -95,16 +106,15 @@ def purchase(purchases, account):
         purchases[purchase_name] = money_amount
         print(f"Вы купили {purchase_name} за {money_amount}\n")
         set_purchases(purchases)
-    print("-----------------------\n")
     pass
 
 
 #   история покупок
+@ending_underscore
 def show_history(purchases):
     print("\nВаши покупки\n-----------------------")
     for key in purchases.keys():
         print(f"{key} - {purchases[key]}")
-    print("-----------------------\n")
     pass
 
 

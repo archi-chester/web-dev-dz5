@@ -37,7 +37,7 @@ import account
 import victory
 import os
 import platform
-from shutil import copyfile
+from shutil import copyfile, copytree
 
 
 #   меню
@@ -60,12 +60,7 @@ while True:
     #   создать папку
     if choice == '1':
         new_dir = input("Введите имя директории: ")
-        if os.path.exists(new_dir):
-            print(f"Папка {new_dir} уже существует")
-        else:
-            os.mkdir(new_dir)
-            print(f"Создана папка {new_dir}")
-        pass
+        print(f"Папка {new_dir} уже существует") if os.path.exists(new_dir) else os.mkdir(new_dir)
 
     #   удалить (файл/папку)
     elif choice == '2':
@@ -81,10 +76,12 @@ while True:
     elif choice == '3':
 
         item_for_copy = input('Выберите файл для копирования: ')
-        if not os.path.exists(item_for_copy):
+        try:
+            copyfile(item_for_copy, item_for_copy + "_copy") if os.path.isfile(item_for_copy)\
+                else copytree(item_for_copy, item_for_copy + "_copy")
+        except FileNotFoundError:
             print(f"Папка {item_for_copy} не существует")
         else:
-            copyfile(item_for_copy, item_for_copy + "_copy")
             print(f"Создание {item_for_copy + '_copy'} успешно завершено")
         pass
 
