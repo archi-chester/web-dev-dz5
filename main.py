@@ -53,6 +53,7 @@ while True:
     print('8.   создатель программы')
     print('9.   играть в викторину')
     print('10.  мой банковский счет')
+    print('11.  сохранить содержимое рабочей директории в файл')
     print('0. выход')
 
     choice = input(f'{"#" * 10}\nВыберите пункт меню: ')
@@ -128,6 +129,17 @@ while True:
     #   мой банковский счет
     elif choice == '10':
         account.menu()
+        pass
+
+    #   сохранить содержимое рабочей директории в файл
+    elif choice == '11':
+        files_str = "files: " + ", ".join(list(filter(lambda cur_file: os.path.isfile(cur_file), os.listdir("."))))
+        dirs_str = "dirs: " + ", ".join(list(filter(lambda cur_dir: os.path.isdir(cur_dir), os.listdir("."))))
+
+        print(files_str, dirs_str)
+
+        with open('current_dir.txt', 'w', encoding='utf-8') as f:
+            f.writelines([files_str, '\n', dirs_str])
         pass
 
     #   мой банковский счет
