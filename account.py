@@ -33,13 +33,56 @@
 
 Для реализации основного меню можно использовать пример ниже или написать свой
 """
+import os
+import json
 
 
 #   пополнить счет
 def add_money_to_account(acc, add_money):
     acc += add_money
     print("-----------------------\n")
+    set_account(acc)
     return acc
+
+
+#   получить значение счета из файла
+def get_account():
+    account = 0
+    if os.path.exists("account.txt"):
+        #   менеджер контекста
+        with open('account.txt', 'r') as f:
+            account = int(f.read())
+    else:
+        with open('account.txt', 'w') as f:
+            f.write(str(account))
+    return int(account)
+
+
+#   получить значение счета из файла
+def get_purchases():
+    purchases = dict()
+    if os.path.exists("purchases.json"):
+        #   менеджер контекста
+        with open('purchases.json', 'r') as f:
+            purchases = json.load(f)
+    else:
+        with open('purchases.json', 'w') as f:
+            json.dump(purchases, f)
+    return purchases
+
+
+#   пополнить счет
+def set_account(account):
+    with open('account.txt', 'w') as f:
+        f.write(str(account))
+    pass
+
+
+#   пополнить счет
+def set_purchases(purchases):
+    with open('purchases.json', 'w') as f:
+        json.dump(purchases, f)
+    pass
 
 
 #   покупка
@@ -51,6 +94,7 @@ def purchase(purchases, account):
         purchase_name = input("Что хотите купить? ")
         purchases[purchase_name] = money_amount
         print(f"Вы купили {purchase_name} за {money_amount}\n")
+        set_purchases(purchases)
     print("-----------------------\n")
     pass
 
@@ -67,9 +111,10 @@ def show_history(purchases):
 def menu():
     #   переменные
     #   счет
-    account = 100
+    set_account(100)
+    account = get_account()
     #   покупки словариком
-    purchases = {}
+    purchases = get_purchases()
 
     #   меню
     while True:
